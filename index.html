@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Anonymous demo for an ARR submission on phrase-localized language-contrastive guidance for code-switching text-to-speech.">
+    <title>Phrase-Localized LCG for Code-Switching TTS — Demo</title>
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        body { font-family: 'Noto Sans', 'Google Sans', sans-serif; }
+        .tabs li { cursor: pointer; }
+        .sentence-context {
+            background: #fafafa;
+            border-left: 3px solid #cfd8dc;
+            padding: 12px 16px;
+            font-size: 0.92em;
+            line-height: 1.7;
+            white-space: pre-wrap;
+            margin: 10px 0 16px 0;
+            color: #455a64;
+        }
+        .sentence-context .phrase-highlight {
+            background: #fff59d;
+            font-weight: 600;
+            padding: 0 3px;
+            border-radius: 2px;
+        }
+        .system-table { table-layout: fixed; }
+        .system-table td:nth-child(1) { width: 22%; }
+        .system-table td:nth-child(2) { width: 55%; }
+        .system-table td:nth-child(3) { width: 23%; font-size: 0.85em; color: #607d8b; }
+        .system-table audio { width: 100%; }
+        .ours-row { background: #fffae7; }
+        .ours-row td:first-child { font-weight: 600; }
+        .corpus-stats {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .corpus-stats .stat { padding: 12px 18px; }
+        .corpus-stats .stat .num { font-size: 1.8em; font-weight: 700; color: #1a73e8; }
+        .corpus-stats .stat .lbl { font-size: 0.85em; color: #607d8b; }
+    </style>
+</head>
+<body>
+
+<!-- ════════════ HERO ════════════ -->
+<section class="hero">
+    <div class="hero-body">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered">
+                <div class="column has-text-centered">
+                    <h1 class="title is-2 publication-title">
+                        Phrase-Localized Language-Contrastive Guidance for<br/>
+                        Code-Switching Text-to-Speech
+                    </h1>
+                    <p class="subtitle is-5" style="color: #607d8b; margin-top: 12px;">
+                        Audio demo accompanying our anonymous submission
+                    </p>
+                    <div class="publication-links" style="margin-top: 16px;">
+                        <a href="#demo" class="external-link button is-normal is-rounded is-dark">
+                            <span>♪ Listen to Demos</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════ ANONYMOUS BANNER ════════════ -->
+<section class="section" style="padding-top: 0.5rem; padding-bottom: 0;">
+    <div class="container is-max-desktop">
+        <div class="notification has-text-centered" style="background-color: #FEE4B7; color: #363636;">
+            <p class="is-size-6" style="font-weight: 500;">
+                ⚠ Demo for an <strong>anonymous submission under review</strong>.<br/>
+                Author identities, affiliations, and code repository links have been omitted for double-blind review.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════ ABSTRACT ════════════ -->
+<section class="section" style="padding-top: 1rem;">
+    <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered">Abstract</h2>
+        <div class="content is-medium" style="text-align: justify;">
+            <p>
+            Zero-shot multilingual text-to-speech (TTS) foundation models replicate speaker
+            identity across languages but suffer from severe <em>cross-lingual accent leakage</em>
+            when the reference voice's native language differs from the target text — a problem
+            that is acute in <strong>intra-utterance code-switching (CS)</strong>, where a foreign
+            phrase must be pronounced with a native accent while the surrounding host carrier
+            preserves speaker identity.
+            We propose <strong>Phrase-Localized Language-Contrastive Guidance (LCG)</strong>,
+            a training-free, inference-time framework for discrete diffusion language model
+            (DLM)-based TTS. LCG (i) extracts phrase boundaries dynamically from the model's
+            internal self-attention layers (no external aligner), (ii) refines them with a
+            zero-cost mask expansion that the iterative denoising naturally tolerates, and
+            (iii) applies a contrastive direction formed by <em>swapping language tags</em>
+            over the refined boundaries — yielding a phrase-localized, language-specific
+            steering vector with an independent scale&nbsp;(λ) decoupled from the global text
+            guidance scale&nbsp;(γ).
+            On a balanced 1,200-utterance benchmark covering 12 directional configurations
+            across 5 languages, LCG is preferred over the unguided baseline in
+            <strong>75.5% of paired listener judgments</strong>
+            (p&nbsp;&lt;&nbsp;0.001) while keeping global naturalness and speaker identity intact.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════ §1 OVERVIEW FIGURES (insert your figures here) ════════════ -->
+<section class="section">
+    <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered">Overview</h2>
+
+        <h3 class="title is-5">Code-Switching TTS — The Challenge</h3>
+        <p class="has-text-grey">
+            Standard global guidance flattens the foreign embedded phrase into the matrix
+            language's accent. Our framework applies <em>localized</em> guidance only over
+            self-derived phrase boundaries to enforce native pronunciation while preserving
+            the host carrier.
+        </p>
+        <figure class="image has-text-centered" style="margin: 20px 0;">
+            <img src="static/figures/cs_illustration.png" alt="Cross-lingual accent leakage and localized control"
+                 style="max-width: 100%; height: auto; display: inline-block;">
+        </figure>
+
+        <h3 class="title is-5" style="margin-top: 30px;">Method Overview</h3>
+        <p class="has-text-grey">
+            Three stages: (a) <strong>Internal Attention Probing</strong> extracts raw
+            audio-to-text alignment from mid-decoder layers; (b) <strong>Mask Refinement</strong>
+            resolves tag-induced shifts via dual-tag union and symmetric margin dilation;
+            (c) <strong>Phrase-Localized LCG</strong> synthesizes the final steering logits
+            with independent guidance scales λ and γ.
+        </p>
+        <figure class="image has-text-centered" style="margin: 20px 0;">
+            <img src="static/figures/method.png" alt="Method overview: attention probing, mask refinement, phrase-localized LCG"
+                 style="max-width: 100%; height: auto; display: inline-block;">
+        </figure>
+    </div>
+</section>
+
+<!-- ════════════ §2 PHRASE COMPARISON ════════════ -->
+<section class="section is-light" id="demo">
+    <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered">Audio Demo &mdash; Phrase Comparison</h2>
+        <p class="has-text-centered">
+            Same English phrase rendered by three systems on the same matrix carrier sentence.
+            All examples are drawn from our <strong>LA=1 subset</strong> &mdash; phrases where
+            every system succeeded at producing intelligible English &mdash; isolating the
+            <em>residual accent quality</em> as the perceptual signal.<br/>
+            <span class="is-size-7 has-text-grey">Use headphones; differences are subtle but consistent. Highlighted text marks the embedded foreign phrase.</span>
+        </p>
+
+        <div class="tabs is-centered is-boxed" style="margin-top: 24px;">
+            <ul>
+                <li class="is-active" data-target="#dir_je"><a>Japanese &rarr; English</a></li>
+                <li data-target="#dir_ke"><a>Korean &rarr; English</a></li>
+            </ul>
+        </div>
+
+        <!-- ─── J → E (4 examples) ─── -->
+        <div id="dir_je" class="sample-container">
+
+            <div class="card" style="margin-bottom: 20px;">
+                <header class="card-header"><p class="card-header-title">
+                    Example 1 — "Automate audit trail with immutable event logs"
+                </p></header>
+                <div class="card-content">
+                    <div class="sentence-context">月次のリスク会では、今回は無理に資料を盛らず、risk-based compliance monitoring framework for payment flows をベースに見よう、って話になった。特に customer due diligence triggered by unusual transaction patterns は営業も早めに拾えるようにして、segregation of duties in the approval workflow の抜けだけは来週までに潰す。あと、<span class="phrase-highlight">automated audit trail with immutable event logs</span> があれば監査対応はかなり楽になるし、material risk appetite statement approved by the board とのズレも説明しやすいと思う。</div>
+                    <table class="table is-fullwidth system-table">
+                        <tr><td>Vanilla (no CS)</td>
+                            <td><audio controls preload="none" src="wavs/phrase/J_to_E/ex01/no_cs.wav"></audio></td>
+                            <td>baseline, no localized guidance</td></tr>
+                        <tr><td>Swap (λ=3, coupled)</td>
+                            <td><audio controls preload="none" src="wavs/phrase/J_to_E/ex01/swap.wav"></audio></td>
+                            <td>position-wise language tag swap</td></tr>
+                        <tr class="ours-row"><td>Ours — LCG (λ=7)</td>
+                            <td><audio controls preload="none" src="wavs/phrase/J_to_E/ex01/ours.wav"></audio></td>
+                            <td>phrase-localized contrastive guidance</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card" style="margin-bottom: 20px;">
+                <header class="card-header"><p class="card-header-title">
+                    Example 2 — "organic word-of-mouth growth after release weekend"
+                </p></header>
+                <div class="card-content">
+                    <div class="sentence-context">昨日ネトフリで観たハリウッド新作、global content strategy with local emotional hooks が露骨なんだけど、ちゃんと泣かせに来るのがずるい。そのまま data-driven recommendation loops inside the Netflix homepage にまんまと乗せられて再生したら、主演の演技は prestige drama packaging for mainstream audiences という感じで意外と重め。友だちの反応も早くて、<span class="phrase-highlight">organic word-of-mouth growth after release weekend</span> は本当に起きそうだし、ラストに入る post-credits sequence for future franchise retention まで含めて、ハリウッドの商売上手さに笑った。</div>
+                    <table class="table is-fullwidth system-table">
+                        <tr><td>Vanilla (no CS)</td><td><audio controls preload="none" src="wavs/phrase/J_to_E/ex02/no_cs.wav"></audio></td><td>baseline</td></tr>
+                        <tr><td>Swap (λ=3, coupled)</td><td><audio controls preload="none" src="wavs/phrase/J_to_E/ex02/swap.wav"></audio></td><td>tag-swap baseline</td></tr>
+                        <tr class="ours-row"><td>Ours — LCG (λ=7)</td><td><audio controls preload="none" src="wavs/phrase/J_to_E/ex02/ours.wav"></audio></td><td>phrase-localized LCG</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card" style="margin-bottom: 20px;">
+                <header class="card-header"><p class="card-header-title">
+                    Example 3 — "disciplined capital allocation across public and private"
+                </p></header>
+                <div class="card-content">
+                    <div class="sentence-context">今週読んだ投資レビューは、上場株のバリュエーションとベンチャー投資の資金循環を同じ温度感で見ていて、読み応えがあった。とくに <span class="phrase-highlight">disciplined capital allocation across public and private markets</span> を評価軸に置き、founder friendly terms with robust downside protection がどこまで成長資金を呼び込むかを検証している点は実務的。後半で示す a credible path to liquidity within five years はやや楽観的だが、portfolio construction anchored in cash flow resilience は、不安定な金利環境で参考になる。</div>
+                    <table class="table is-fullwidth system-table">
+                        <tr><td>Vanilla (no CS)</td><td><audio controls preload="none" src="wavs/phrase/J_to_E/ex03/no_cs.wav"></audio></td><td>baseline</td></tr>
+                        <tr><td>Swap (λ=3, coupled)</td><td><audio controls preload="none" src="wavs/phrase/J_to_E/ex03/swap.wav"></audio></td><td>tag-swap baseline</td></tr>
+                        <tr class="ours-row"><td>Ours — LCG (λ=7)</td><td><audio controls preload="none" src="wavs/phrase/J_to_E/ex03/ours.wav"></audio></td><td>phrase-localized LCG</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card" style="margin-bottom: 20px;">
+                <header class="card-header"><p class="card-header-title">
+                    Example 4 — "a standard double-blind peer review process"
+                </p></header>
+                <div class="card-content">
+                    <div class="sentence-context">査読を引き受けた夜、私は研究室の片隅でコーヒーを冷ましながら原稿を読み直した。<span class="phrase-highlight">a standard double blind peer review process</span> なので著者名は見えなかったが、問いの立て方には若い研究者らしい誠実さがあり、a clearly articulated theoretical contribution がもう少し前面に出れば通ると思った。途中で赤を入れすぎて、これは指導教員の添削ではないと自分に言い聞かせた。結局、判定欄には採択ではなく、minor revisions with stronger methodological justification を求める、と静かに書いた。</div>
+                    <table class="table is-fullwidth system-table">
+                        <tr><td>Vanilla (no CS)</td><td><audio controls preload="none" src="wavs/phrase/J_to_E/ex04/no_cs.wav"></audio></td><td>baseline</td></tr>
+                        <tr><td>Swap (λ=3, coupled)</td><td><audio controls preload="none" src="wavs/phrase/J_to_E/ex04/swap.wav"></audio></td><td>tag-swap baseline</td></tr>
+                        <tr class="ours-row"><td>Ours — LCG (λ=7)</td><td><audio controls preload="none" src="wavs/phrase/J_to_E/ex04/ours.wav"></audio></td><td>phrase-localized LCG</td></tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ─── K → E (4 examples) ─── -->
+        <div id="dir_ke" class="sample-container" style="display: none;">
+
+            <div class="card" style="margin-bottom: 20px;">
+                <header class="card-header"><p class="card-header-title">
+                    Example 1 — "Post-Merger Integration Roadmap for Value Creation"
+                </p></header>
+                <div class="card-content">
+                    <div class="sentence-context">작년 겨울, 인수팀에 막 합류했을 때 나는 mid-market acquisition target with recurring revenue 에 처음 꽂혔다. 처음에는 창업자와의 미팅 분위기가 좋아서 거래가 생각보다 쉽게 풀릴 줄 알았다. 숫자는 예뻤지만, 재무담당 임원은 debt capacity under a conservative base case 를 다시 계산해 보자고 했고, 우리는 buyer-friendly earnout structure after closing 까지 시뮬레이션했다. 실사 막판에는 working capital adjustment clause based on historical averages 의 작은 문구 하나 때문에 밤새 모델을 고쳤다. 결국 이사회 앞에서 나는 <span class="phrase-highlight">post-merger integration roadmap for value creation</span> 을 붙여 설명했고, 그때 인수합병이 엑셀보다 사람 설득에 가깝다는 걸 배웠다.</div>
+                    <table class="table is-fullwidth system-table">
+                        <tr><td>Vanilla (no CS)</td><td><audio controls preload="none" src="wavs/phrase/K_to_E/ex01/no_cs.wav"></audio></td><td>baseline</td></tr>
+                        <tr><td>Swap (λ=3, coupled)</td><td><audio controls preload="none" src="wavs/phrase/K_to_E/ex01/swap.wav"></audio></td><td>tag-swap baseline</td></tr>
+                        <tr class="ours-row"><td>Ours — LCG (λ=7)</td><td><audio controls preload="none" src="wavs/phrase/K_to_E/ex01/ours.wav"></audio></td><td>phrase-localized LCG</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card" style="margin-bottom: 20px;">
+                <header class="card-header"><p class="card-header-title">
+                    Example 2 — "practical workshops aligned with our buying committee"
+                </p></header>
+                <div class="card-content">
+                    <div class="sentence-context">지난달 우리 팀이 도입한 기업 간 영업 컨설팅사는 기대보다 훨씬 실무적이었고, 리뷰를 남길 만큼 인상이 좋았다. 첫 진단 미팅에서 a clear account-based sales playbook 으로 논의를 정리해 주니, 영업대표와 마케팅 담당자가 같은 언어로 문제를 보게 됐다. 워크숍은 <span class="phrase-highlight">practical workshops aligned with our buying committee</span> 와 실제 고객 미팅 사례를 엮어 진행돼, 강의보다 공동 설계에 가까웠다. 특히 actionable pipeline diagnostics grounded in real CRM data 가 가장 도움이 됐는데, 막연했던 리드 품질 문제와 딜 지연 원인이 숫자로 보였다.</div>
+                    <table class="table is-fullwidth system-table">
+                        <tr><td>Vanilla (no CS)</td><td><audio controls preload="none" src="wavs/phrase/K_to_E/ex02/no_cs.wav"></audio></td><td>baseline</td></tr>
+                        <tr><td>Swap (λ=3, coupled)</td><td><audio controls preload="none" src="wavs/phrase/K_to_E/ex02/swap.wav"></audio></td><td>tag-swap baseline</td></tr>
+                        <tr class="ours-row"><td>Ours — LCG (λ=7)</td><td><audio controls preload="none" src="wavs/phrase/K_to_E/ex02/ours.wav"></audio></td><td>phrase-localized LCG</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card" style="margin-bottom: 20px;">
+                <header class="card-header"><p class="card-header-title">
+                    Example 3 — "Secure Cross-Institutional Data Sharing Agreement"
+                </p></header>
+                <div class="card-content">
+                    <div class="sentence-context">지난달 새벽 실험이 또 밀리던 날, 나는 지도교수님께 early-stage hypothesis validation protocol for our pilot experiments 을 먼저 정리해 보자고 말했다. 옆 랩의 민재 선배가 a reproducible single-cell RNA sequencing workflow 를 공유해 주면서 분위기가 조금 풀렸고, 우리는 <span class="phrase-highlight">secure cross-institutional data sharing agreement</span> 에 서명한 뒤 샘플 메타데이터를 맞췄다. 그 다음 주부터 weekly joint lab meeting with rotating discussants 를 열었는데, 질문이 날카로워도 서로 방어적으로 굴지 않았다.</div>
+                    <table class="table is-fullwidth system-table">
+                        <tr><td>Vanilla (no CS)</td><td><audio controls preload="none" src="wavs/phrase/K_to_E/ex03/no_cs.wav"></audio></td><td>baseline</td></tr>
+                        <tr><td>Swap (λ=3, coupled)</td><td><audio controls preload="none" src="wavs/phrase/K_to_E/ex03/swap.wav"></audio></td><td>tag-swap baseline</td></tr>
+                        <tr class="ours-row"><td>Ours — LCG (λ=7)</td><td><audio controls preload="none" src="wavs/phrase/K_to_E/ex03/ours.wav"></audio></td><td>phrase-localized LCG</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card" style="margin-bottom: 20px;">
+                <header class="card-header"><p class="card-header-title">
+                    Example 4 — "lean household operations with zero emotional overhead"
+                </p></header>
+                <div class="card-content">
+                    <div class="sentence-context">퇴근하고 집에 오자마자 운동복을 세탁기에 넣었는데, 오늘은 minimum viable weekday morning routine 으로 내일 입을 양말이랑 머그컵까지 미리 챙겼다. 싱크대에 컵 두 개랑 접시 하나만 남겨두기 싫어서 <span class="phrase-highlight">lean household operations with zero emotional overhead</span> 처럼 바로 치웠고, 냉장고 앞 메모에는 data driven grocery budget tracking system 의 잔액을 작게 적어놨다. 베란다 화분에 물 주는 사이 고양이는 새 택배 박스에 들어가서 weekly user research session with a very picky stakeholder 에 참여하는 표정으로 나를 봤다.</div>
+                    <table class="table is-fullwidth system-table">
+                        <tr><td>Vanilla (no CS)</td><td><audio controls preload="none" src="wavs/phrase/K_to_E/ex04/no_cs.wav"></audio></td><td>baseline</td></tr>
+                        <tr><td>Swap (λ=3, coupled)</td><td><audio controls preload="none" src="wavs/phrase/K_to_E/ex04/swap.wav"></audio></td><td>tag-swap baseline</td></tr>
+                        <tr class="ours-row"><td>Ours — LCG (λ=7)</td><td><audio controls preload="none" src="wavs/phrase/K_to_E/ex04/ours.wav"></audio></td><td>phrase-localized LCG</td></tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ════════════ §3 FULL SENTENCE ════════════ -->
+<section class="section">
+    <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered">Full-Sentence Quality</h2>
+        <p class="has-text-centered">
+            LCG affects only the embedded phrase frames. The surrounding matrix carrier
+            retains the reference speaker's identity and prosody.
+        </p>
+
+        <div class="tabs is-centered is-boxed" style="margin-top: 24px;">
+            <ul>
+                <li class="is-active" data-target="#full_je"><a>JA &rarr; EN</a></li>
+                <li data-target="#full_ke"><a>KO &rarr; EN</a></li>
+                <li data-target="#full_ej"><a>EN &rarr; JA</a></li>
+                <li data-target="#full_ek"><a>EN &rarr; KO</a></li>
+            </ul>
+        </div>
+
+        <div id="full_je" class="full-container">
+            <div class="card"><div class="card-content">
+                <p class="has-text-weight-bold">Full code-switched sentence (J→E)</p>
+                <div class="sentence-context">平日は六時半に起床し、白湯を飲んだ後に <span class="phrase-highlight">a five-minute mindfulness protocol before checking devices</span> を行う。洗面後は <span class="phrase-highlight">morning metrics review for better decision making</span> として睡眠、支出、移動時間を確認し、服装は <span class="phrase-highlight">minimal wardrobe curation with editorial consistency</span> を基準に決める。出発前には <span class="phrase-highlight">calendar blocking based on personal energy curves</span> で午前の集中枠を確保し、<span class="phrase-highlight">the lightweight personal operating system for daily execution</span> を手帳で見直す。</div>
+                <table class="table is-fullwidth system-table">
+                    <tr><td>Vanilla (no CS)</td><td><audio controls preload="none" src="wavs/fullsent/J_to_E/no_cs.wav"></audio></td><td>baseline</td></tr>
+                    <tr><td>Swap (λ=3)</td><td><audio controls preload="none" src="wavs/fullsent/J_to_E/swap.wav"></audio></td><td>tag-swap</td></tr>
+                    <tr class="ours-row"><td>Ours — LCG</td><td><audio controls preload="none" src="wavs/fullsent/J_to_E/ours.wav"></audio></td><td>phrase-localized LCG</td></tr>
+                </table>
+            </div></div>
+        </div>
+
+        <div id="full_ke" class="full-container" style="display: none;">
+            <div class="card"><div class="card-content">
+                <p class="has-text-weight-bold">Full code-switched sentence (K→E)</p>
+                <div class="sentence-context">부산 초량 골목을 반나절 걸어본 리뷰를 쓰자면, 이 동네는 관광 체크리스트보다 <span class="phrase-highlight">a compact customer journey map for first-time wanderers</span> 처럼 발걸음을 유도한다. 역에서 산복도로 이어지는 표지와 계단의 리듬에서는 <span class="phrase-highlight">human-centered wayfinding design at every corner</span> 가 과하지 않게 느껴졌고, 길을 잃어도 불안보다 호기심이 먼저 왔다. 작은 카페와 분식집은 <span class="phrase-highlight">low-friction payment flow across tiny local shops</span> 덕분에 현금 걱정 없이 툭툭 들르기 좋았다. 무엇보다 낡은 주택, 빨래, 항구 냄새까지 겹치면서 <span class="phrase-highlight">a neighborhood brand narrative built on everyday rituals</span> 가 주는 설득력이 생겨, 일부러 천천히 헤매볼 만한 코스였다.</div>
+                <table class="table is-fullwidth system-table">
+                    <tr><td>Vanilla (no CS)</td><td><audio controls preload="none" src="wavs/fullsent/K_to_E/no_cs.wav"></audio></td><td>baseline</td></tr>
+                    <tr><td>Swap (λ=3)</td><td><audio controls preload="none" src="wavs/fullsent/K_to_E/swap.wav"></audio></td><td>tag-swap</td></tr>
+                    <tr class="ours-row"><td>Ours — LCG</td><td><audio controls preload="none" src="wavs/fullsent/K_to_E/ours.wav"></audio></td><td>phrase-localized LCG</td></tr>
+                </table>
+            </div></div>
+        </div>
+
+        <div id="full_ej" class="full-container" style="display: none;">
+            <div class="card"><div class="card-content">
+                <p class="has-text-weight-bold">Full code-switched sentence (E→J)</p>
+                <div class="sentence-context">After the rain, I ducked into a tiny old-school cafe by the station, and the <span class="phrase-highlight">深煎り豆をネルで落とす香り</span> made my whole jacket smell like comfort. The owner gave me a smile that said <span class="phrase-highlight">ごゆっくりお召し上がりください</span>, not fussy, just warm. I took the corner seat and watched steam blur the window, feeling a sort of <span class="phrase-highlight">雨上がりの縁側で飲むほうじ茶</span> settle into the evening. Next time, I'm bringing a book and pretending I don't have notifications.</div>
+                <table class="table is-fullwidth system-table">
+                    <tr><td>Vanilla (no CS)</td><td><audio controls preload="none" src="wavs/fullsent/E_to_J/no_cs.wav"></audio></td><td>baseline</td></tr>
+                    <tr><td>Swap (λ=3)</td><td><audio controls preload="none" src="wavs/fullsent/E_to_J/swap.wav"></audio></td><td>tag-swap</td></tr>
+                    <tr class="ours-row"><td>Ours — LCG</td><td><audio controls preload="none" src="wavs/fullsent/E_to_J/ours.wav"></audio></td><td>phrase-localized LCG</td></tr>
+                </table>
+            </div></div>
+        </div>
+
+        <div id="full_ek" class="full-container" style="display: none;">
+            <div class="card"><div class="card-content">
+                <p class="has-text-weight-bold">Full code-switched sentence (E→K)</p>
+                <div class="sentence-context">Han's slim novel reads like a review of everything we keep misplacing: names, rooms, the voices of the dead. The <span class="phrase-highlight">첫눈 녹듯 사라지는 어머니의 마지막 손길</span> gives the opening its ache, while the <span class="phrase-highlight">제사상에 올린 식어 가는 흰밥 한 그릇</span> turns grief into something almost domestic. By the final chapter, even <span class="phrase-highlight">봄비에 젖은 벚꽃잎이 흩어진 골목</span> feels less symbolic than inevitable. I admired its restraint; it left me quiet, not devastated, and somehow that was worse.</div>
+                <table class="table is-fullwidth system-table">
+                    <tr><td>Vanilla (no CS)</td><td><audio controls preload="none" src="wavs/fullsent/E_to_K/no_cs.wav"></audio></td><td>baseline</td></tr>
+                    <tr><td>Swap (λ=3)</td><td><audio controls preload="none" src="wavs/fullsent/E_to_K/swap.wav"></audio></td><td>tag-swap</td></tr>
+                    <tr class="ours-row"><td>Ours — LCG</td><td><audio controls preload="none" src="wavs/fullsent/E_to_K/ours.wav"></audio></td><td>phrase-localized LCG</td></tr>
+                </table>
+            </div></div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════ §4 LAMBDA PROGRESSION ════════════ -->
+<section class="section is-light">
+    <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered">Effect of the Guidance Scale</h2>
+        <p class="has-text-centered">
+            One sentence rendered across four guidance settings, from no localized control
+            to over-amplified LCG. The default operating point maximizes accent clarity
+            without acoustic degradation.
+        </p>
+
+        <div class="card" style="margin-top: 16px;">
+            <div class="card-content">
+                <p class="has-text-weight-bold">Sentence (J→E)</p>
+                <div class="sentence-context">月次のリスク会では、今回は無理に資料を盛らず、<span class="phrase-highlight">risk-based compliance monitoring framework for payment flows</span> をベースに見よう、って話になった。特に <span class="phrase-highlight">customer due diligence triggered by unusual transaction patterns</span> は営業も早めに拾えるようにして、<span class="phrase-highlight">segregation of duties in the approval workflow</span> の抜けだけは来週までに潰す。あと、<span class="phrase-highlight">automated audit trail with immutable event logs</span> があれば監査対応はかなり楽になるし、<span class="phrase-highlight">material risk appetite statement approved by the board</span> とのズレも説明しやすいと思う。</div>
+                <table class="table is-fullwidth system-table">
+                    <tr><td>Vanilla (no CS)</td>
+                        <td><audio controls preload="none" src="wavs/lambda/syncs_J_to_E_39/00_baseline.wav"></audio></td>
+                        <td>no localized guidance</td></tr>
+                    <tr><td>Swap (λ=3, coupled)</td>
+                        <td><audio controls preload="none" src="wavs/lambda/syncs_J_to_E_39/01_swap_lambda3.wav"></audio></td>
+                        <td>tag-swap; mild accent shift</td></tr>
+                    <tr class="ours-row"><td>Ours — LCG (λ=4, default)</td>
+                        <td><audio controls preload="none" src="wavs/lambda/syncs_J_to_E_39/02_ours_lambda4.wav"></audio></td>
+                        <td>phrase-localized, decoupled scale</td></tr>
+                    <tr><td>Ours — LCG (λ=10, over-amplified)</td>
+                        <td><audio controls preload="none" src="wavs/lambda/syncs_J_to_E_39/03_ours_lambda10.wav"></audio></td>
+                        <td>excessive guidance; naturalness drops</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════ §5 SYNTHETIC TEXT CORPUS ════════════ -->
+<section class="section">
+    <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered">Evaluation Corpus</h2>
+        <p>
+            All audio above is synthesized from our <strong>1,200-utterance balanced
+            code-switching benchmark</strong>, generated with a large language model and
+            spanning five languages across twelve directional configurations.
+        </p>
+        <div class="corpus-stats">
+            <div class="stat"><div class="num">1,200</div><div class="lbl">utterances</div></div>
+            <div class="stat"><div class="num">12</div><div class="lbl">directions</div></div>
+            <div class="stat"><div class="num">5</div><div class="lbl">languages (EN/FR/DE/JA/KO)</div></div>
+            <div class="stat"><div class="num">~3.6</div><div class="lbl">avg phrases/utt</div></div>
+            <div class="stat"><div class="num">18</div><div class="lbl">topical domains</div></div>
+            <div class="stat"><div class="num">6</div><div class="lbl">stylistic registers</div></div>
+        </div>
+        <p class="has-text-grey is-size-7" style="margin-top: 8px;">
+            Each utterance contains 3–5 dense, technical or literary embedded phrases
+            (~6 words, ~30 characters per phrase). The corpus is balanced by direction
+            (100 utterances per direction) to enable per-direction evaluation.
+        </p>
+    </div>
+</section>
+
+<!-- ════════════ FOOTER ════════════ -->
+<footer class="footer">
+    <div class="content has-text-centered is-size-7">
+        <p>
+            All audio is synthetically generated for research purposes.
+            Reference voice prompts come from publicly licensed monolingual TTS corpora
+            (LJSpeech, Public Domain · KSS, CC&nbsp;BY-NC-SA&nbsp;4.0 · and additional
+            voice prompts under their respective open licenses).
+            No human-recorded speech beyond these reference voices is included.
+        </p>
+        <p style="margin-top: 14px; color: #9e9e9e;">
+            Demo for an anonymous submission under review.
+            All identifying information has been removed for double-blind evaluation.
+        </p>
+    </div>
+</footer>
+
+<script>
+    // Tab switching scoped to each tab group
+    $(document).on('click', '.tabs li', function() {
+        var $this = $(this);
+        var $tabContainer = $this.closest('.tabs');
+        var targetId = $this.attr('data-target');
+        if (!targetId) return;
+
+        var $allTabs = $tabContainer.find('li');
+        var allTargets = $allTabs.map(function() { return $(this).attr('data-target'); }).get();
+
+        $allTabs.removeClass('is-active');
+        $this.addClass('is-active');
+        allTargets.forEach(function(t) { if (t) $(t).hide(); });
+        $(targetId).show();
+    });
+</script>
+</body>
+</html>

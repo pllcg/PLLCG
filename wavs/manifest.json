@@ -1,0 +1,133 @@
+{
+  "phrase_comparison": [
+    {
+      "direction": "J_to_E",
+      "ex_id": "ex01",
+      "entry_id": "syncs_J_to_E_39",
+      "phrase_idx": 3,
+      "phrase": "Automate audit trail with immutable event logs",
+      "sentence": "月次のリスク会では、今回は無理に資料を盛らず、risk-based compliance monitoring framework for payment flows をベースに見よう、って話になった。特に customer due diligence triggered by unusual transaction patterns は営業も早めに拾えるようにして、segregation of duties in the approval workflow の抜けだけは来週までに潰す。あと、automated audit trail with immutable event logs があれば監査対応はかなり楽になるし、material risk appetite statement approved by the board とのズレも説明しやすいと思う。",
+      "lid_gain": 0.8662,
+      "wav_dir": "wavs/phrase/J_to_E/ex01"
+    },
+    {
+      "direction": "J_to_E",
+      "ex_id": "ex02",
+      "entry_id": "syncs_J_to_E_7",
+      "phrase_idx": 3,
+      "phrase": "organic word-of-mouth growth after his weekend",
+      "sentence": "昨日ネトフリで観たハリウッド新作、global content strategy with local emotional hooks が露骨なんだけど、ちゃんと泣かせに来るのがずるい。そのまま data-driven recommendation loops inside the Netflix homepage にまんまと乗せられて再生したら、主演の演技は prestige drama packaging for mainstream audiences という感じで意外と重め。友だちの反応も早くて、organic word-of-mouth growth after release weekend は本当に起きそうだし、ラストに入る post-credits sequence for future franchise retention まで含めて、ハリウッドの商売上手さに笑った。",
+      "lid_gain": 0.7264,
+      "wav_dir": "wavs/phrase/J_to_E/ex02"
+    },
+    {
+      "direction": "J_to_E",
+      "ex_id": "ex03",
+      "entry_id": "syncs_J_to_E_69",
+      "phrase_idx": 2,
+      "phrase": "Minimal wardrobe curation with editorial consistency",
+      "sentence": "平日は六時半に起床し、白湯を飲んだ後に a five-minute mindfulness protocol before checking devices を行う。洗面後は morning metrics review for better decision making として睡眠、支出、移動時間を確認し、服装は minimal wardrobe curation with editorial consistency を基準に決める。出発前には calendar blocking based on personal energy curves で午前の集中枠を確保し、the lightweight personal operating system for daily execution を手帳で見直す。",
+      "lid_gain": 0.6952,
+      "wav_dir": "wavs/phrase/J_to_E/ex03"
+    },
+    {
+      "direction": "J_to_E",
+      "ex_id": "ex04",
+      "entry_id": "syncs_J_to_E_56",
+      "phrase_idx": 1,
+      "phrase": "Jobs to be Done interviews with early adopters",
+      "sentence": "昨日のプロダクト定例、結局 customer-centric product strategy aligned with business goals を軸に戻そう、という話になった。新規オンボーディングは jobs to be done interviews with early adopters で詰まりどころを拾って、a lightweight experiment loop for onboarding UX に落とし込む感じ。来週は business impact beyond vanity metrics and feature usage を見ながら、リリース判断は焦らずいこう。",
+      "lid_gain": 0.669,
+      "wav_dir": "wavs/phrase/J_to_E/ex04"
+    },
+    {
+      "direction": "K_to_E",
+      "ex_id": "ex01",
+      "entry_id": "syncs_K_to_E_49",
+      "phrase_idx": 0,
+      "phrase": "A scalable account-based marketing engine",
+      "sentence": "지난달 중견 제조사 대상 기업 간 서비스 컨설팅 제안에 들어갔을 때, 클라이언트는 단순 리드 확보보다 a scalable account-based marketing engine 을 원했다. 우리는 인터뷰를 돌리며 기존 영업 방식이 a consultative sales motion built on trust 와 꽤 멀다는 걸 확인했다. 그래서 솔루션 소개 대신 an integrated client onboarding and success model 의 빈틈을 먼저 그려주고, 임원 워크숍에서는 a measurable value creation roadmap for enterprise buyers 까지 함께 정리했다. 미팅이 끝나자 영업본부장이 “이제 컨설팅이 아니라 파트너 같다”고 말했는데, 그 한마디가 이번 프로젝트의 방향을 정했다.",
+      "lid_gain": 0.9481,
+      "wav_dir": "wavs/phrase/K_to_E/ex01"
+    },
+    {
+      "direction": "K_to_E",
+      "ex_id": "ex02",
+      "entry_id": "syncs_K_to_E_59",
+      "phrase_idx": 2,
+      "phrase": "sales motion for early enterprise pilot's",
+      "sentence": "어제 데모데이 끝나고 투자자 피드백 정리했는데, 다들 우리 팀이 문제 정의는 잘했지만 a clear path to recurring revenue 를 더 빨리 보여줘야 한다고 하더라. 그래서 이번 주에는 가격표랑 파일럿 조건을 다시 묶고, unit economics that improve with scale 을 숫자로 꽂아 넣으려고 해. 기술 설명도 너무 길었으니까, 다음 피치에서는 a founder-led sales motion for early enterprise pilots 에 집중해서 말하면 훨씬 덜 뜬구름 같을 듯. 슬라이드는 내가 오늘 밤에 다이어트해서 공유할게.",
+      "lid_gain": 0.9295,
+      "wav_dir": "wavs/phrase/K_to_E/ex02"
+    },
+    {
+      "direction": "K_to_E",
+      "ex_id": "ex03",
+      "entry_id": "syncs_K_to_E_29",
+      "phrase_idx": 2,
+      "phrase": "Quarterly Talent Review and Succession Planning Process",
+      "sentence": "이번 임원 워크숍에서 대표는 최근 성과 정체의 원인을 공유하며 cross-functional leadership operating model for enterprise-wide execution 을 조직 재설계의 출발점으로 제시했다. 각 본부장은 data-driven decision making and accountability framework 에 맞춰 목표를 재정의하고, quarterly talent review and succession planning process 와 예산 배분 기준을 연동하기로 했다. 특히 중간관리자에게는 psychological safety in high-performance management teams 를 현장 언어로 설명하고, 피드백 과정에서 반복적으로 확인하도록 요청했다. 다음 분기부터는 전사 차원의 합의를 전제로 실행 현황을 월 단위로 점검하며 change management roadmap for scalable growth 까지 경영회의의 핵심 안건으로 다룰 예정이다.",
+      "lid_gain": 0.8159,
+      "wav_dir": "wavs/phrase/K_to_E/ex03"
+    },
+    {
+      "direction": "K_to_E",
+      "ex_id": "ex04",
+      "entry_id": "syncs_K_to_E_92",
+      "phrase_idx": 2,
+      "phrase": "hybrid cloud zero trust security control framework",
+      "sentence": "이번 분기 인프라 전략 검토에서는 regulated enterprise cloud-native infrastructure modernization roadmap 을 우선 과제로 상정했습니다. 특히 핵심 거래 시스템에는 multi-region active-active architecture with automated failover 를 적용하고, 데이터 계층은 지연 시간과 복구 목표를 함께 검증해야 합니다. 보안 영역에서는 hybrid cloud zero trust security control framework 를 표준 통제 체계로 확장하되, 운영 조직은 FinOps-driven capacity planning and cost governance model 을 성과 지표에 반영하기로 했습니다. 마지막으로 장애 대응 체계에는 observable platform operations model governed by service level objectives 까지 도입하여 비용 효율성과 서비스 신뢰성을 동시에 관리하겠습니다.",
+      "lid_gain": 0.6978,
+      "wav_dir": "wavs/phrase/K_to_E/ex04"
+    }
+  ],
+  "full_sentence": [
+    {
+      "direction": "J_to_E",
+      "entry_id": "syncs_J_to_E_35",
+      "sentence": "昨日、開発基盤の棚卸しをしてたら、今の手順は人に依存しすぎだよねという話になった。まず reproducible local development environments for everyone を整えて、pull request based release workflow はそのまま残しつつ、observability dashboards that explain failures を増やそう、という感じ。デプロイは怖がるより、safe rollback strategies for small teams に寄せれば週末も少し穏やかになるはず。",
+      "wav_dir": "wavs/fullsent/J_to_E"
+    },
+    {
+      "direction": "K_to_E",
+      "entry_id": "syncs_K_to_E_67",
+      "sentence": "이번 뷰티 신제품은 그냥 팔로워 큰 셀럽 잡는 것보다 a creator-led full-funnel campaign strategy 로 가는 게 훨씬 맞아 보여. 브랜드 톤을 설명하기 전에 audience trust signals from niche KOLs 를 먼저 보고, 댓글에서 진짜 고민이 나오는 카테고리부터 좁혀보자. 그다음에는 short-form content optimized for social commerce 로 장바구니까지 자연스럽게 이어가고, 라이브는 너무 세일즈처럼 안 밀었으면 해. 대신 a performance-based collaboration model with clear KPIs 로 계약하면, 크리에이터도 부담 덜하고 우리도 리포트 볼 때 덜 싸울 듯.",
+      "wav_dir": "wavs/fullsent/K_to_E"
+    },
+    {
+      "direction": "E_to_J",
+      "entry_id": "syncs_E_to_J_0",
+      "sentence": "After a week of gray commuting, I walked home beneath the 雨上がりにしっとり匂い立つ桜並木 and felt the city loosen its shoulders. At the corner shrine, the 風にほどけて散る薄紅の花びら brushed my jacket like someone trying to say, stay a little longer. Later, on a riverside bench, the 祖母が包んだ桜餅の葉の香り rose from my paper bag, sweet and green in the dusk, because spring in Tokyo always arrives quietly, then all at once.",
+      "wav_dir": "wavs/fullsent/E_to_J"
+    },
+    {
+      "direction": "E_to_K",
+      "entry_id": "syncs_E_to_K_0",
+      "sentence": "I read the essay collection beside the river, and its best pages felt like 은은한 달빛이 솔잎 끝에 맺힌 밤, restrained but luminous. The critic in me loved the pacing; the tired daughter in me needed 어머니께서 조용히 내어 주신 따뜻한 대추차. Some metaphors drifted, yet 새벽 안개가 들판을 천천히 덮는 순간 stayed with me. By the final page, the book had earned a feeling of 오래된 절 마당에 떨어진 첫눈—quiet, exact, and cleansing.",
+      "wav_dir": "wavs/fullsent/E_to_K"
+    }
+  ],
+  "lambda_sweep": {
+    "entry_id": "syncs_J_to_E_39",
+    "sentence": "月次のリスク会では、今回は無理に資料を盛らず、risk-based compliance monitoring framework for payment flows をベースに見よう、って話になった。特に customer due diligence triggered by unusual transaction patterns は営業も早めに拾えるようにして、segregation of duties in the approval workflow の抜けだけは来週までに潰す。あと、automated audit trail with immutable event logs があれば監査対応はかなり楽になるし、material risk appetite statement approved by the board とのズレも説明しやすいと思う。",
+    "wav_dir": "wavs/lambda/syncs_J_to_E_39",
+    "levels": [
+      {
+        "label": "Vanilla (no CS guidance)",
+        "file": "00_baseline.wav"
+      },
+      {
+        "label": "Swap baseline (λ=3, coupled)",
+        "file": "01_swap_lambda3.wav"
+      },
+      {
+        "label": "Ours LCG (λ=4, default)",
+        "file": "02_ours_lambda4.wav"
+      },
+      {
+        "label": "Ours LCG (λ=10, over-amplified)",
+        "file": "03_ours_lambda10.wav"
+      }
+    ]
+  }
+}
