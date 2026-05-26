@@ -101,7 +101,6 @@
                 carries the accent of its own language, requiring no fine-tuning or auxiliary models. Across diverse
                 language pairs, LCG robustly increases the nativeness of the code-switched phrase while suppressing
                 accent leakage, and preserving overall speaker identity and naturalness.
-                \footnote{https://pllcg.github.io/PLLCG/}
             </p>
         </div>
     </div>
@@ -299,14 +298,14 @@
 
         <div class="tabs is-centered is-boxed" style="margin-top: 24px;">
             <ul>
-                <li class="is-active" data-target="#full_je"><a>JA &rarr; EN</a></li>
-                <li data-target="#full_ke"><a>KO &rarr; EN</a></li>
+                <li class="is-active" data-target="#full_ek"><a>EN &rarr; KO</a></li>
                 <li data-target="#full_ej"><a>EN &rarr; JA</a></li>
-                <li data-target="#full_ek"><a>EN &rarr; KO</a></li>
+                <li data-target="#full_je"><a>JA &rarr; EN</a></li>
+                <li data-target="#full_ke"><a>KO &rarr; EN</a></li>
             </ul>
         </div>
 
-        <div id="full_je" class="full-container">
+        <div id="full_je" class="full-container" style="display: none;">
             <div class="card"><div class="card-content">
                 <p class="has-text-weight-bold">Full code-switched sentence (J→E)</p>
                 <div class="sentence-context">平日は六時半に起床し、白湯を飲んだ後に <span class="phrase-highlight">a five-minute mindfulness protocol before checking devices</span> を行う。洗面後は <span class="phrase-highlight">morning metrics review for better decision making</span> として睡眠、支出、移動時間を確認し、服装は <span class="phrase-highlight">minimal wardrobe curation with editorial consistency</span> を基準に決める。出発前には <span class="phrase-highlight">calendar blocking based on personal energy curves</span> で午前の集中枠を確保し、<span class="phrase-highlight">the lightweight personal operating system for daily execution</span> を手帳で見直す。</div>
@@ -342,7 +341,7 @@
             </div></div>
         </div>
 
-        <div id="full_ek" class="full-container" style="display: none;">
+        <div id="full_ek" class="full-container">
             <div class="card"><div class="card-content">
                 <p class="has-text-weight-bold">Full code-switched sentence (E→K)</p>
                 <div class="sentence-context">Han's slim novel reads like a review of everything we keep misplacing: names, rooms, the voices of the dead. The <span class="phrase-highlight">첫눈 녹듯 사라지는 어머니의 마지막 손길</span> gives the opening its ache, while the <span class="phrase-highlight">제사상에 올린 식어 가는 흰밥 한 그릇</span> turns grief into something almost domestic. By the final chapter, even <span class="phrase-highlight">봄비에 젖은 벚꽃잎이 흩어진 골목</span> feels less symbolic than inevitable. I admired its restraint; it left me quiet, not devastated, and somehow that was worse.</div>
@@ -377,10 +376,10 @@
                     <tr><td>Swap (λ=3, coupled)</td>
                         <td><audio controls preload="none" src="wavs/lambda/syncs_J_to_E_39/01_swap_lambda3.wav"></audio></td>
                         <td>tag-swap; mild accent shift</td></tr>
-                    <tr class="ours-row"><td>Ours — LCG (λ=4, default)</td>
+                    <tr class="ours-row"><td>Ours — LCG (λ=7, default)</td>
                         <td><audio controls preload="none" src="wavs/lambda/syncs_J_to_E_39/02_ours_lambda4.wav"></audio></td>
                         <td>phrase-localized, decoupled scale</td></tr>
-                    <tr><td>Ours — LCG (λ=10, over-amplified)</td>
+                    <tr><td>Ours — LCG (λ=13, over-amplified)</td>
                         <td><audio controls preload="none" src="wavs/lambda/syncs_J_to_E_39/03_ours_lambda10.wav"></audio></td>
                         <td>excessive guidance; naturalness drops</td></tr>
                 </table>
