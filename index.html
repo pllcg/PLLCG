@@ -55,8 +55,8 @@
             <div class="columns is-centered">
                 <div class="column has-text-centered">
                     <h1 class="title is-2 publication-title">
-                        Phrase-Localized Language-Contrastive Guidance for<br/>
-                        Code-Switching Text-to-Speech
+                        Phrase-Localized Language-Contrastive Guidance: <br/>
+                        Training-Free Localized Accent Control for Code-Switching Text-to-Speech
                     </h1>
                     <p class="subtitle is-5" style="color: #607d8b; margin-top: 12px;">
                         Audio demo accompanying our anonymous submission
@@ -90,25 +90,18 @@
         <h2 class="title is-3 has-text-centered">Abstract</h2>
         <div class="content is-medium" style="text-align: justify;">
             <p>
-            Zero-shot multilingual text-to-speech (TTS) foundation models replicate speaker
-            identity across languages but suffer from severe <em>cross-lingual accent leakage</em>
-            when the reference voice's native language differs from the target text — a problem
-            that is acute in <strong>intra-utterance code-switching (CS)</strong>, where a foreign
-            phrase must be pronounced with a native accent while the surrounding host carrier
-            preserves speaker identity.
-            We propose <strong>Phrase-Localized Language-Contrastive Guidance (LCG)</strong>,
-            a training-free, inference-time framework for discrete diffusion language model
-            (DLM)-based TTS. LCG (i) extracts phrase boundaries dynamically from the model's
-            internal self-attention layers (no external aligner), (ii) refines them with a
-            zero-cost mask expansion that the iterative denoising naturally tolerates, and
-            (iii) applies a contrastive direction formed by <em>swapping language tags</em>
-            over the refined boundaries — yielding a phrase-localized, language-specific
-            steering vector with an independent scale&nbsp;(λ) decoupled from the global text
-            guidance scale&nbsp;(γ).
-            On a balanced 1,200-utterance benchmark covering 12 directional configurations
-            across 5 languages, LCG is preferred over the unguided baseline in
-            <strong>75.5% of paired listener judgments</strong>
-            (p&nbsp;&lt;&nbsp;0.001) while keeping global naturalness and speaker identity intact.
+                Current speech synthesis struggles with code-switching, which mixes a foreign language phrase into a
+                primary language utterance, causing the phrase to be spoken with the primary language's accent rather
+                than its native one. We propose Phrase-Localized Language-Contrastive Guidance (LCG), a training-free
+                inference framework that restores a native accent to code-switched phrases in cross-lingual
+                text-to-speech. LCG replaces the single language guidance applied across the whole utterance with a
+                separate guidance for each region, so each part is guided by its own language. To choose where to
+                apply this localized guidance, we propose a self-attention probing technique that finds the phrase
+                boundaries without external alignments. Together, these components generate speech in which each region
+                carries the accent of its own language, requiring no fine-tuning or auxiliary models. Across diverse
+                language pairs, LCG robustly increases the nativeness of the code-switched phrase while suppressing
+                accent leakage, and preserving overall speaker identity and naturalness.
+                \footnote{https://pllcg.github.io/PLLCG/}
             </p>
         </div>
     </div>
